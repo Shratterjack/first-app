@@ -16,16 +16,25 @@ router.get('/print-request',function(req,res,next){
 
 /* 
 * /get-sum api that takes two numbers as parameters from the URL
-* and sends the sum of those numbers in response
+* and sends the sum of those numbers in response as a string
 * @param {string} x
 * @param {string} y
 */
 router.get('/get-sum/:x/:y',function(req,res,next){
 
-	 var numA = parseInt(req.params.x);
-	 var numB = parseInt(req.params.y);
-	 var sum = addition(numA,numB);
-	 res.send(sum.toString());
+	 var numA = Number(req.params.x);
+	 var numB = Number(req.params.y);
+
+	 if(!isNaN(numA) && !isNaN(numB))
+	{
+       res.send(addition(numA,numB).toString());
+	}
+	else
+	{
+	   res.send('Error:Please provide Numeric Inputs!');
+
+	}
+	 
 });
 
 /* 
@@ -34,8 +43,8 @@ router.get('/get-sum/:x/:y',function(req,res,next){
 * @param {integer} y
 */
 function addition(x,y)
-{
-   return (x + y);
+{  
+	   return (x + y);
 }
 
 module.exports = router;
